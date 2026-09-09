@@ -1,0 +1,19 @@
+name: CI Pipeline
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Kotlin
+        uses: actions/setup-kotlin@v2
+        with:
+          kotlin-version: '1.7.10'
+      - name: Install dependencies
+        run: |
+          npm install
+      - name: Test and lint
+        run: |
+          ./gradlew build
+          echo "Passed" || echo "Failed"
